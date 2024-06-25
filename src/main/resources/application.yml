@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: finforz-backend
+    main.banner-mode: CONSOLE
+    output.ansi.enabled: always
+    thymeleaf.cache: false
+---
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: admin
+    password: admin
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+    properties.hibernate.format_sql: true
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  output:
+    ansi:
+      enabled: always
+  data:
+    mongodb:
+      authentication-database: admin
+      username: admin
+      password: password
+      database: demo
+      port: 27017
+      host: localhost
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+server:
+  port: 8081
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operationsSorter: method
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+
+
+
+management:
+  trace:
+    http:
+      include: '*'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+
+
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    root: INFO
+    com.finforz.ems_backend: TRACE
+    io. micrometer: INFO
+    org.springframework.web: debug
+    org.springframework.security: debug
+    org.springframework.http: debug
+    io.r2dbc.postgresql.PARAM: debug
+    io.r2dbc.postgresql.QUERY: debug
